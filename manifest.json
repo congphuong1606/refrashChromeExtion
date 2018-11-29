@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Auto lead folow - elninomedia.info",
+  "description": "Auto lead folow - @Author:PhuongCong - v1.01",
+  "version": "1.0",
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "tabs",
+    "storage"
+  ],
+  "browser_action": {
+    "default_icon": "img/icon-central-new.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "img/icon-central-new.png"
+  },
+  "background": {
+    "scripts": [
+      "js/app.js"
+    ]
+  }
+}

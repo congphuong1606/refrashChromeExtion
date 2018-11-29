@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src='js/popup.js'></script>
+
+    <title>Auto lead folow - @Author:PhuongCong - v1.01</title>
+</head>
+<body style="width: 700px;">
+
+<div>
+    <div style="width: 75%;float:left">
+        <h1 style="text-align: center;color: #5bc0de">LEAD FOLOW - elnino</h1>
+        <h5 style="text-align: center;color: gray;font-weight: normal;    margin-top: -10px;">@Author:PhuongCong -
+            v1.0</h5>
+        <hr>
+
+    </div>
+    <div style="width: 20%;float: right;margin-top: 20px" id="btn">
+        <label class="switch">
+            <input id="offOn" type="checkbox" checked>
+            <span class="slider round"></span>
+        </label>
+
+    </div>
+</div>
+
+<div id="listOffers">
+
+</div>
+<style>
+    #listOffers .name {
+        width: 70%;
+        float: left;
+        color: #f6bb42;;
+    }
+
+    #listOffers .timeStamp {
+        width: 19%;
+        float: left;
+        color: rgba(168, 125, 128, 0.74);
+    }
+
+    #listOffers .status {
+        width: 10%;
+        float: right;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
+
+</body>
+</html>
+<!--
+<div id="body-tab1">
+
+    <table style="width: 783px">
+        <thead>
+        <tr id="radio-group">
+            <th><label class="container" style="font-size:18px;color: #d9534f!important;">Đơn 1
+
+                <input id="radio1" type="radio" name="theRadioGroupName" value="1">
+                <span class="checkmark"></span>
+            </label></th>
+            <th><label class="container" style="font-size:18px;color: #5cb85c!important;">Đơn 2
+                <input id="radio2" type="radio" name="theRadioGroupName" value="2">
+                <span class="checkmark"></span>
+            </label></th>
+            <th><label class="container" style="font-size:18px;color: #b89a1f!important;">2 Đơn
+                <input id="radio4" type="radio" name="theRadioGroupName" value="4">
+                <span class="checkmark"></span>
+            </label></th>
+            <th><label class="container" style="font-size:18px;">Tắt
+                <input id="radio3" type="radio" name="theRadioGroupName" value="3">
+                <span class="checkmark"></span>
+            </label></th>
+        </tr>
+        </thead>
+
+    </table>
+    <div style="width: 783px;overflow-y: auto;overflow-x: hidden;max-height: 380px">
+        <table id="mua-ban" style="width: 783px;">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;" id="urlmua">
+                <td><label style="font-size: 16px;width: 40%;color: #d9534f"><span>。</span>ID QC 1</label></td>
+                <td colspan="2"><input id="id-ad-mua" class="w3-input" style=" height: 25px " type="text"></td>
+                <td><label style="font-size: 12px;color: red" id="error-id-mua"></label></td>
+            </tr>
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;" id="div-bank1">
+                <td><label style="font-size: 16px;color: red;width: 40%"><span>。</span>Ngân hàng</label></td>
+                <td colspan="2"><input id="bank1" class="w3-input" style=" height: 25px " type="text"></td>
+                <td><label style="font-size: 12px;color: red" id="error-bank1"></label></td>
+            </tr>
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;" id="div-input-mua">
+                <td><label style="font-size: 16px;color: #d9534f;width: 40%"><span>。</span>Đặt mua cao nhất</label></td>
+                <td colspan="2"><input id="max-mua" class="w3-input" style=" height: 25px " type="number"></td>
+                <td><label style="font-size: 12px;color: red" id="error-mua"></label></td>
+            </tr>
+
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;" id="div-default1">
+                <td><label style="font-size: 16px;color: #d9534f;width: 40%"><span>。</span>Giá mặc định (min)</label>
+                </td>
+                <td colspan="2"><input id="default1" class="w3-input" style=" height: 25px " type="number"></td>
+                <td><label style="font-size: 12px;color: red" id="error-default1"></label></td>
+            </tr>
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;color: #d9534f;"
+                id="div-ignore-toida-mua">
+                <td><label style="font-size: 16px;color: #d9534f;width: 40%"><span>。</span>Số lượng max</label>
+                </td>
+                <td colspan="2"><input id="ignore-toida-mua" class="w3-input" style=" height: 25px " type="number"></td>
+                <td><label style="font-size: 12px;color: red" id="error-sle"></label></td>
+            </tr>
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;color: #d9534f;"
+                id="div=folow-user-mua">
+                <td><label style="font-size: 16px;color: #d9534f;width: 40%"><span style="color: gray">。</span>Bám đối
+                    tượng</label></td>
+                <td colspan="2"><input id="input-folow-user-mua" class="w3-input" style=" height: 25px " type="text">
+                </td>
+                <td>
+                    <div style="margin-left: 20px">
+                        <input type="checkbox" id="showAlertMua" name="showAlert" style="width: 20px;float: left;"/>
+                        <label for="showAlertMua" style="font-size: 16px; color: #d9534f;   margin-top: 12px!important;
+    font-size: 16px;
+    float: right;
+">Bằng giá</label>
+                    </div>
+                </td>
+            </tr>
+
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;" id="urlban">
+                <td><label style="font-size: 16px;color: #5cb85c;width: 40%"><span>。</span>ID QC 2</label></td>
+                <td colspan="2"><input id="id-ad-ban" class="w3-input" style=" height: 25px " type="text"></td>
+                <td><label style="font-size: 12px;color: red" id="error-id-ban"></label></td>
+            </tr>
+
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;" id="div-bank2">
+                <td><label style="font-size: 16px;color: #5cb85c;width: 40%"><span>。</span>Ngân hàng</label></td>
+                <td colspan="2"><input id="bank2" class="w3-input" style=" height: 25px " type="text"></td>
+                <td><label style="font-size: 12px;color: red" id="error-bank2"></label></td>
+            </tr>
+
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;" id="div-input-ban">
+                <td><label style="font-size: 16px;color: #5cb85c;width: 40%"><span>。</span>Đặt mua cao nhất</label>
+                </td>
+                <td colspan="2"><input id="min-ban" class="w3-input" style=" height: 25px " type="number"></td>
+                <td><label style="font-size: 12px;color: red" id="error-ban"></label></td>
+            </tr>
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;" id="div-default2">
+                <td><label style="font-size: 16px;color: #5cb85c;width: 40%"><span>。</span>Giá mặc định (min)</label>
+                </td>
+                <td colspan="2"><input id="default2" class="w3-input" style=" height: 25px " type="number"></td>
+                <td><label style="font-size: 12px;color: red" id="error-default2"></label></td>
+            </tr>
+
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;" id="div-ignore-toida-ban">
+                <td><label style="font-size: 16px;color: #5cb85c;width: 40%"><span>。</span>Số lượng max</label>
+                </td>
+                <td colspan="2"><input id="ignore-toida-ban" class="w3-input" style=" height: 25px " type="number"></td>
+                <td><label style="font-size: 12px;color: red"></label></td>
+            </tr>
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;" id="div=folow-user-ban">
+                <td><label style="font-size: 16px;color: #5cb85c;width: 40%"><span style="color: gray">。</span>Bám đối
+                    tượng</label></td>
+                <td colspan="2"><input id="input-folow-user-ban" class="w3-input" style=" height: 25px " type="text">
+                </td>
+                <td>
+                    <div style="margin-left: 20px">
+                        <input type="checkbox" id="showAlertBan" name="showAlert" style="width: 20px;float: left;"/>
+                        <label for="showAlertBan" style="font-size: 16px;  color: #5cb85c;  margin-top: 12px!important;
+    font-size: 16px;
+    float: right;
+">Bằng giá</label>
+                    </div>
+                </td>
+            </tr>
+            <tr style="    margin-top: 20px;margin-bottom: 20px;width: 783px!important;">
+                <td><label style="font-size: 16px;color: gray;width: 40%"><span style="color: gray">。</span>Khoảng (s)
+                    thay
+                    đổi giá</label></td>
+                <td colspan="2"><input id="input-time-dur" class="w3-input" style=" height: 25px " type="number"></td>
+                <td><label style="font-size: 12px;color: red" id="error-time-dur"></label></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+
+</div>
+
+
+<div style="    text-align: center; margin: 10px">
+
+    <div>
+        <h4>
+            <span style="color: gray">Các ngân hàng:</span><span style="color: #5cb85c"> ACB (Ngân hàng Á Châu) , Vietinbank , Agribank , Sacombank , NamABank , Vietcombank , Eximbank , BIDV , DongA Bank , Maritime Bank , Techcombank , VPBank , PVcom  Bank , SHBank , HDBank , LienVietPostBank , TP Bank , SeABank , ABBank , BacABank , VIBBank , Thẻ ATM (smartlink) , MB (Ngân hàng quân đội)</span>
+        </h4>
+    </div>
+</div>
+</body>
+
+<style>
+    body {
+        margin-right: 0px;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .switch #inputSw {
+        display: none;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    #inputSw:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    #inputSw:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    #inputSw:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    p {
+        margin-left: 30px;
+        margin-top: 0px;
+        font-style: italic;
+        margin-bottom: 3px;
+        color: gray
+    }
+
+    hr {
+        margin-bottom: 0px;
+        background-color: blue;
+        color: blue;
+    }
+
+    #body-tab1 {
+    }
+
+    #body-tab2 {
+    }
+
+    .btn_tab {
+        width: 49%;
+        height: 50px;
+        font-size: 18px;
+        background: white;
+        outline: 0;
+        cursor: pointer;
+        color: gray;
+        border: none;
+
+    }
+
+    .btn_tab:focus {
+        outline: 0;
+
+        cursor: pointer;
+        width: 49%;
+        height: 50px;
+        font-size: 18px;
+        background: white;
+        color: gray;
+        border: none;
+
+    }
+
+    span {
+        color: red;
+        font-weight: bold;
+    }
+
+    input {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding-left: 8px;
+        padding-right: 8px;
+        border-radius: 15px;
+        height: 28px !important;
+        border: 0.6px solid gray;
+
+    }
+
+    input:focus {
+        border-radius: 0;
+    }
+
+    .button1:focus {
+        background-color: #5bc0de;
+        color: white;
+        border-radius: 4px;
+        border: 0.6px solid #5bc0de;
+    }
+
+    .button:focus {
+        background-color: #5bc0de;
+        color: white;
+        border-radius: 4px;
+        border: 0.6px solid #5bc0de;
+    }
+
+    /* The container */
+    .container {
+        width: 50%;
+        display: block;
+        font-weight: normal;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* Hide the browser's default radio button */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* Create a custom radio button */
+    .checkmark {
+        margin-top: 3px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        border-radius: 50%;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the radio button is checked, add a blue background */
+    .container input:checked ~ .checkmark {
+        background-color: #f3910e;
+    }
+
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the indicator (dot/circle) when checked */
+    .container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the indicator (dot/circle) */
+    .container .checkmark:after {
+        top: 9px;
+        left: 9px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+    }
+
+    .button {
+        background-color: #f3910e; /* Green */
+        border: none;
+        color: white;
+        padding: 8px 50px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+    .button1 {
+        background-color: #5bc0de;
+        color: white;
+        border-radius: 4px;
+        border: 0.6px solid #5bc0de;
+
+    }
+
+    .button1:hover {
+        background-color: #f3910e;
+        color: white;
+    }
+</style>
+-->
